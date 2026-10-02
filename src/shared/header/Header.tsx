@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Search, Bell, ChevronDown, User, Settings, LogOut, Menu } from 'lucide-react'
-import { useSidebar } from '../SidebarContext'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Search, Bell, ChevronDown, User, Settings, LogOut } from 'lucide-react'
+import MenuToggle from './MenuToggle'
+import CurvedMenu from './CurvedMenu'
 
 type HeaderProps = {
   searchPlaceholder?: string
@@ -19,8 +21,8 @@ export default function Header({
   initials = 'GK',
 }: HeaderProps) {
   const navigate = useNavigate()
-  const { setMobileOpen } = useSidebar()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [navOpen, setNavOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
 
   // Close the user dropdown when clicking outside of it
@@ -34,16 +36,25 @@ export default function Header({
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
 
+  // Prevent body scroll when the mobile nav is open
+  useEffect(() => {
+    document.body.style.overflow = navOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [navOpen])
+
   return (
     <header className="sticky top-0 z-40 flex items-center gap-3 bg-white border-b border-gray-200 px-3 sm:px-4 h-16">
-      {/* Mobile hamburger */}
-      <button
-        onClick={() => setMobileOpen(true)}
-        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors md:hidden cursor-pointer"
-        aria-label="Open menu"
+      {/* Mobile hamburger — animated toggle that opens the curved menu */}
+      <div
+        aria-expanded={navOpen}
+        className={`z-[60] flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-gray-600 md:hidden ${
+          navOpen ? 'fixed left-3 top-3 bg-white shadow-md sm:left-4' : 'relative hover:bg-gray-100 hover:text-gray-700 transition-colors'
+        }`}
       >
-        <Menu size={20} />
-      </button>
+        <MenuToggle open={navOpen} onOpenChange={setNavOpen} className="size-6" />
+      </div>
 
       {/* Search */}
       <div className="relative flex-1 max-w-xl">
@@ -126,6 +137,22 @@ export default function Header({
           )}
         </div>
       </div>
+
+      {/* Animated mobile navigation */}
+      <AnimatePresence>
+        {navOpen && (
+          <motion.div
+            key="nav-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            onClick={() => setNavOpen(false)}
+            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden"
+          />
+        )}
+        {navOpen && <CurvedMenu key="curved-menu" onClose={() => setNavOpen(false)} />}
+      </AnimatePresence>
     </header>
   )
 }
