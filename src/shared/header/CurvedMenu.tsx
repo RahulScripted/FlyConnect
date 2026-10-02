@@ -39,13 +39,11 @@ function NavItem({
   label,
   to,
   icon: Icon,
-  index,
   onClose,
 }: {
   label: string
   to: string
   icon: LucideIcon
-  index: number
   onClose: () => void
 }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -136,13 +134,12 @@ export default function CurvedMenu({ onClose }: { onClose: () => void }) {
       <div className="flex h-full flex-col justify-between pt-20">
         <div className="flex flex-col overflow-y-auto px-7">
           <nav>
-            {navLinks.map((l, i) => (
+            {navLinks.map((l) => (
               <NavItem
                 key={l.to}
                 label={l.label}
                 to={l.to}
                 icon={l.icon}
-                index={i + 1}
                 onClose={onClose}
               />
             ))}
