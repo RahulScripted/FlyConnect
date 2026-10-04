@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MoreHorizontal, ChevronRight, Eye, MessageCircle, Trash2 } from 'lucide-react'
+import { MoreHorizontal, ChevronRight, Eye, MessageCircle, Trash2, Plane } from 'lucide-react'
 import { journeys } from '../../../mock/dashboard'
 import type { Journey } from '../../../mock/dashboard'
 import Pagination from './Pagination'
@@ -116,40 +116,77 @@ export default function TodaysJourneys() {
           </table>
         </div>
 
-        {/* Mobile cards */}
-        <div className="flex flex-col gap-3 md:hidden">
+        {/* Mobile cards — same design as Upcoming Reminders */}
+        <div className="flex flex-col gap-4 md:hidden">
           {rows.map((j) => (
-            <div key={j.id} className="rounded-xl border border-gray-100 p-4">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="font-semibold text-gray-800">{j.customer}</p>
-                  <p className="text-xs text-gray-400">PNR {j.pnr} · {j.flight}</p>
+            <div
+              key={j.id}
+              className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm"
+            >
+              {/* Header strip */}
+              <div className="flex items-center justify-between bg-gradient-to-r from-blue-600 to-blue-500 px-4 py-2.5 text-white">
+                <span className="text-xs font-medium">{j.departure}</span>
+                <span className="rounded-full bg-white/20 px-2 py-0.5 text-[11px] font-semibold">
+                  PNR {j.pnr}
+                </span>
+              </div>
+
+              <div className="p-4">
+                {/* Route */}
+                <div className="flex items-center justify-between">
+                  <div className="text-left">
+                    <p className="text-xs text-gray-400">{j.depTime}</p>
+                    <p className="text-2xl font-bold text-gray-900">{j.depCode}</p>
+                    <p className="text-[11px] text-gray-400">{j.depCity}</p>
+                  </div>
+
+                  <div className="flex flex-col items-center px-2">
+                    <p className="text-xs font-medium text-gray-500">{j.flight}</p>
+                    <div className="my-1 flex items-center gap-1">
+                      <span className="h-px w-6 bg-gray-200" />
+                      <Plane size={14} className="text-blue-500" />
+                      <span className="h-px w-6 bg-gray-200" />
+                    </div>
+                    <p className="text-[11px] text-gray-400">{j.duration}</p>
+                  </div>
+
+                  <div className="text-right">
+                    <p className="text-xs text-gray-400">{j.arrTime}</p>
+                    <p className="text-2xl font-bold text-gray-900">{j.arrCode}</p>
+                    <p className="text-[11px] text-gray-400">{j.arrCity}</p>
+                  </div>
                 </div>
-                <span className="text-sm font-medium text-gray-600">{j.departure}</span>
-              </div>
 
-              <div className="mt-3 text-sm text-gray-600">{j.route}</div>
+                <div className="my-4 border-t border-dashed border-gray-200" />
 
-              <div className="mt-3 flex items-center gap-2">
-                <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${statusStyles[j.status]}`}>
-                  {j.status}
-                </span>
-                <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${waStyles[j.whatsapp]}`}>
-                  {j.whatsapp}
-                </span>
-              </div>
+                {/* Passenger + status */}
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-[11px] text-gray-400">Passenger</span>
+                    <span className="text-sm font-semibold text-gray-800">{j.customer}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${statusStyles[j.status]}`}>
+                      {j.status}
+                    </span>
+                    <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${waStyles[j.whatsapp]}`}>
+                      {j.whatsapp}
+                    </span>
+                  </div>
+                </div>
 
-              {/* Action buttons */}
-              <div className="mt-4 grid grid-cols-3 gap-2 border-t border-gray-100 pt-3">
-                <button className="flex items-center justify-center gap-1.5 rounded-lg bg-gray-50 py-2 text-xs font-medium text-gray-700 hover:bg-gray-100 cursor-pointer">
-                  <Eye size={14} /> View
-                </button>
-                <button className="flex items-center justify-center gap-1.5 rounded-lg bg-emerald-50 py-2 text-xs font-medium text-emerald-600 hover:bg-emerald-100 cursor-pointer">
-                  <MessageCircle size={14} /> Send
-                </button>
-                <button className="flex items-center justify-center gap-1.5 rounded-lg bg-rose-50 py-2 text-xs font-medium text-rose-500 hover:bg-rose-100 cursor-pointer">
-                  <Trash2 size={14} /> Cancel
-                </button>
+                {/* Action buttons */}
+                <div className="mt-4 grid grid-cols-3 gap-2 border-t border-gray-100 pt-3">
+                  <button className="flex items-center justify-center gap-1.5 rounded-lg bg-gray-50 py-2 text-xs font-medium text-gray-700 hover:bg-gray-100 cursor-pointer">
+                    <Eye size={14} /> View
+                  </button>
+                  <button className="flex items-center justify-center gap-1.5 rounded-lg bg-emerald-50 py-2 text-xs font-medium text-emerald-600 hover:bg-emerald-100 cursor-pointer">
+                    <MessageCircle size={14} /> Send
+                  </button>
+                  <button className="flex items-center justify-center gap-1.5 rounded-lg bg-rose-50 py-2 text-xs font-medium text-rose-500 hover:bg-rose-100 cursor-pointer">
+                    <Trash2 size={14} /> Cancel
+                  </button>
+                </div>
               </div>
             </div>
           ))}

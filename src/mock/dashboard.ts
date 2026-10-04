@@ -125,21 +125,28 @@ export type Journey = {
   departure: string
   status: 'Today' | 'Upcoming' | 'Completed'
   whatsapp: 'Scheduled' | 'Sent' | 'Pending'
+  depCode: string
+  depCity: string
+  depTime: string
+  arrCode: string
+  arrCity: string
+  arrTime: string
+  duration: string
 }
 
 export const journeys: Journey[] = [
-  { id: 'j1', customer: 'Amit Patel', pnr: 'LMN456', flight: 'EK-501', route: 'BOM → DXB', departure: '02:15 PM', status: 'Today', whatsapp: 'Scheduled' },
-  { id: 'j2', customer: 'Sneha Iyer', pnr: 'QWE321', flight: 'UK-955', route: 'DEL → BOM', departure: '04:40 PM', status: 'Today', whatsapp: 'Scheduled' },
-  { id: 'j3', customer: 'Rahul Sharma', pnr: 'ABC123', flight: 'AI-202', route: 'BOM → DEL', departure: '10:30 AM', status: 'Upcoming', whatsapp: 'Sent' },
-  { id: 'j4', customer: 'Priya Mehta', pnr: 'XYZ789', flight: '6E-501', route: 'BOM → BLR', departure: '12:45 PM', status: 'Upcoming', whatsapp: 'Sent' },
-  { id: 'j5', customer: 'Neha Soni', pnr: 'GHI321', flight: '6E-454', route: 'BOM → PNQ', departure: '09:15 AM', status: 'Completed', whatsapp: 'Sent' },
-  { id: 'j6', customer: 'Rohit Verma', pnr: 'DEF987', flight: 'AI-212', route: 'DEL → BOM', departure: '06:00 PM', status: 'Completed', whatsapp: 'Sent' },
-  { id: 'j7', customer: 'Neha Panjwani', pnr: 'UIO987', flight: 'SG-816', route: 'BOM → GOI', departure: '08:10 PM', status: 'Upcoming', whatsapp: 'Scheduled' },
-  { id: 'j8', customer: 'Karan Malhotra', pnr: 'RTY654', flight: '6E-210', route: 'BOM → HYD', departure: '06:20 PM', status: 'Upcoming', whatsapp: 'Scheduled' },
-  { id: 'j9', customer: 'Divya Nair', pnr: 'PLM852', flight: 'AI-440', route: 'BLR → DEL', departure: '07:05 AM', status: 'Upcoming', whatsapp: 'Pending' },
-  { id: 'j10', customer: 'Vikram Rao', pnr: 'OKN963', flight: 'UK-833', route: 'HYD → BOM', departure: '11:50 AM', status: 'Upcoming', whatsapp: 'Scheduled' },
-  { id: 'j11', customer: 'Anjali Desai', pnr: 'WSX147', flight: '6E-677', route: 'PNQ → DEL', departure: '03:30 PM', status: 'Upcoming', whatsapp: 'Sent' },
-  { id: 'j12', customer: 'Suresh Kumar', pnr: 'EDC258', flight: 'AI-101', route: 'DEL → GOI', departure: '05:15 PM', status: 'Upcoming', whatsapp: 'Scheduled' },
+  { id: 'j1', customer: 'Amit Patel', pnr: 'LMN456', flight: 'EK-501', route: 'BOM → DXB', departure: '02:15 PM', status: 'Today', whatsapp: 'Scheduled', depCode: 'BOM', depCity: 'Mumbai', depTime: '02:15 PM', arrCode: 'DXB', arrCity: 'Dubai', arrTime: '04:05 PM', duration: '3h 20m' },
+  { id: 'j2', customer: 'Sneha Iyer', pnr: 'QWE321', flight: 'UK-955', route: 'DEL → BOM', departure: '04:40 PM', status: 'Today', whatsapp: 'Scheduled', depCode: 'DEL', depCity: 'Delhi', depTime: '04:40 PM', arrCode: 'BOM', arrCity: 'Mumbai', arrTime: '06:50 PM', duration: '2h 10m' },
+  { id: 'j3', customer: 'Rahul Sharma', pnr: 'ABC123', flight: 'AI-202', route: 'BOM → DEL', departure: '10:30 AM', status: 'Upcoming', whatsapp: 'Sent', depCode: 'BOM', depCity: 'Mumbai', depTime: '10:30 AM', arrCode: 'DEL', arrCity: 'Delhi', arrTime: '12:40 PM', duration: '2h 10m' },
+  { id: 'j4', customer: 'Priya Mehta', pnr: 'XYZ789', flight: '6E-501', route: 'BOM → BLR', departure: '12:45 PM', status: 'Upcoming', whatsapp: 'Sent', depCode: 'BOM', depCity: 'Mumbai', depTime: '12:45 PM', arrCode: 'BLR', arrCity: 'Bengaluru', arrTime: '02:15 PM', duration: '1h 30m' },
+  { id: 'j5', customer: 'Neha Soni', pnr: 'GHI321', flight: '6E-454', route: 'BOM → PNQ', departure: '09:15 AM', status: 'Completed', whatsapp: 'Sent', depCode: 'BOM', depCity: 'Mumbai', depTime: '09:15 AM', arrCode: 'PNQ', arrCity: 'Pune', arrTime: '10:05 AM', duration: '0h 50m' },
+  { id: 'j6', customer: 'Rohit Verma', pnr: 'DEF987', flight: 'AI-212', route: 'DEL → BOM', departure: '06:00 PM', status: 'Completed', whatsapp: 'Sent', depCode: 'DEL', depCity: 'Delhi', depTime: '06:00 PM', arrCode: 'BOM', arrCity: 'Mumbai', arrTime: '08:10 PM', duration: '2h 10m' },
+  { id: 'j7', customer: 'Neha Panjwani', pnr: 'UIO987', flight: 'SG-816', route: 'BOM → GOI', departure: '08:10 PM', status: 'Upcoming', whatsapp: 'Scheduled', depCode: 'BOM', depCity: 'Mumbai', depTime: '08:10 PM', arrCode: 'GOI', arrCity: 'Goa', arrTime: '09:20 PM', duration: '1h 10m' },
+  { id: 'j8', customer: 'Karan Malhotra', pnr: 'RTY654', flight: '6E-210', route: 'BOM → HYD', departure: '06:20 PM', status: 'Upcoming', whatsapp: 'Scheduled', depCode: 'BOM', depCity: 'Mumbai', depTime: '06:20 PM', arrCode: 'HYD', arrCity: 'Hyderabad', arrTime: '07:45 PM', duration: '1h 25m' },
+  { id: 'j9', customer: 'Divya Nair', pnr: 'PLM852', flight: 'AI-440', route: 'BLR → DEL', departure: '07:05 AM', status: 'Upcoming', whatsapp: 'Pending', depCode: 'BLR', depCity: 'Bengaluru', depTime: '07:05 AM', arrCode: 'DEL', arrCity: 'Delhi', arrTime: '09:50 AM', duration: '2h 45m' },
+  { id: 'j10', customer: 'Vikram Rao', pnr: 'OKN963', flight: 'UK-833', route: 'HYD → BOM', departure: '11:50 AM', status: 'Upcoming', whatsapp: 'Scheduled', depCode: 'HYD', depCity: 'Hyderabad', depTime: '11:50 AM', arrCode: 'BOM', arrCity: 'Mumbai', arrTime: '01:15 PM', duration: '1h 25m' },
+  { id: 'j11', customer: 'Anjali Desai', pnr: 'WSX147', flight: '6E-677', route: 'PNQ → DEL', departure: '03:30 PM', status: 'Upcoming', whatsapp: 'Sent', depCode: 'PNQ', depCity: 'Pune', depTime: '03:30 PM', arrCode: 'DEL', arrCity: 'Delhi', arrTime: '05:35 PM', duration: '2h 05m' },
+  { id: 'j12', customer: 'Suresh Kumar', pnr: 'EDC258', flight: 'AI-101', route: 'DEL → GOI', departure: '05:15 PM', status: 'Upcoming', whatsapp: 'Scheduled', depCode: 'DEL', depCity: 'Delhi', depTime: '05:15 PM', arrCode: 'GOI', arrCity: 'Goa', arrTime: '07:40 PM', duration: '2h 25m' },
 ]
 
 export type Reminder = {
@@ -178,6 +185,136 @@ export const user = {
   name: 'Garv',
   role: 'admin' as Role,
 }
+
+export type BookingPoint = { day: string; count: number }
+
+export type BookingRange = '7d' | '30d' | 'year'
+
+export const bookingRangeLabels: Record<BookingRange, string> = {
+  '7d': 'Last 7 Days',
+  '30d': 'Last 30 Days',
+  year: 'This Year',
+}
+
+/** Team-wide totals — shown to admins */
+export const bookingsByRange: Record<BookingRange, BookingPoint[]> = {
+  '7d': [
+    { day: '28 Sep', count: 3 },
+    { day: '29 Sep', count: 6 },
+    { day: '30 Sep', count: 2 },
+    { day: '01 Oct', count: 8 },
+    { day: '02 Oct', count: 5 },
+    { day: '03 Oct', count: 9 },
+    { day: '04 Oct', count: 4 },
+  ],
+  '30d': [
+    { day: 'Sep 6', count: 13 },
+    { day: 'Sep 10', count: 9 },
+    { day: 'Sep 14', count: 23 },
+    { day: 'Sep 18', count: 16 },
+    { day: 'Sep 22', count: 24 },
+    { day: 'Sep 26', count: 12 },
+    { day: 'Sep 30', count: 18 },
+    { day: 'Oct 4', count: 22 },
+  ],
+  year: [
+    { day: 'Apr 12', count: 7 },
+    { day: 'May 3', count: 4 },
+    { day: 'May 17', count: 22 },
+    { day: 'May 31', count: 11 },
+    { day: 'Jun 21', count: 8 },
+    { day: 'Jul 5', count: 11 },
+    { day: 'Jul 19', count: 11 },
+    { day: 'Aug 2', count: 12 },
+    { day: 'Aug 16', count: 7 },
+    { day: 'Aug 30', count: 24 },
+    { day: 'Sep 13', count: 23 },
+    { day: 'Sep 27', count: 18 },
+    { day: 'Oct 4', count: 22 },
+  ],
+}
+
+/** Only the signed-in member's own bookings — shown to members */
+export const myBookingsByRange: Record<BookingRange, BookingPoint[]> = {
+  '7d': [
+    { day: '28 Sep', count: 1 },
+    { day: '29 Sep', count: 2 },
+    { day: '30 Sep', count: 0 },
+    { day: '01 Oct', count: 3 },
+    { day: '02 Oct', count: 1 },
+    { day: '03 Oct', count: 2 },
+    { day: '04 Oct', count: 1 },
+  ],
+  '30d': [
+    { day: 'Sep 6', count: 3 },
+    { day: 'Sep 10', count: 2 },
+    { day: 'Sep 14', count: 5 },
+    { day: 'Sep 18', count: 4 },
+    { day: 'Sep 22', count: 6 },
+    { day: 'Sep 26', count: 2 },
+    { day: 'Sep 30', count: 4 },
+    { day: 'Oct 4', count: 3 },
+  ],
+  year: [
+    { day: 'Apr 12', count: 2 },
+    { day: 'May 3', count: 1 },
+    { day: 'May 17', count: 5 },
+    { day: 'May 31', count: 3 },
+    { day: 'Jun 21', count: 2 },
+    { day: 'Jul 5', count: 3 },
+    { day: 'Jul 19', count: 2 },
+    { day: 'Aug 2', count: 4 },
+    { day: 'Aug 16', count: 1 },
+    { day: 'Aug 30', count: 6 },
+    { day: 'Sep 13', count: 5 },
+    { day: 'Sep 27', count: 4 },
+    { day: 'Oct 4', count: 3 },
+  ],
+}
+
+/** Per-member booking counts (admin-only breakdown), keyed by range */
+export type MemberBookings = { name: string; count: number; color: string }
+
+export const memberBookingsByRange: Record<BookingRange, MemberBookings[]> = {
+  '7d': [
+    { name: 'Rahul Sharma', count: 14, color: '#2563eb' },
+    { name: 'Priya Mehta', count: 11, color: '#7c3aed' },
+    { name: 'Amit Patel', count: 8, color: '#06b6d4' },
+    { name: 'Sneha Iyer', count: 4, color: '#f59e0b' },
+  ],
+  '30d': [
+    { name: 'Rahul Sharma', count: 52, color: '#2563eb' },
+    { name: 'Priya Mehta', count: 41, color: '#7c3aed' },
+    { name: 'Amit Patel', count: 33, color: '#06b6d4' },
+    { name: 'Sneha Iyer', count: 11, color: '#f59e0b' },
+  ],
+  year: [
+    { name: 'Rahul Sharma', count: 184, color: '#2563eb' },
+    { name: 'Priya Mehta', count: 142, color: '#7c3aed' },
+    { name: 'Amit Patel', count: 97, color: '#06b6d4' },
+    { name: 'Sneha Iyer', count: 63, color: '#f59e0b' },
+  ],
+}
+
+export type DeliverySlice = { name: string; value: number; color: string }
+
+export const messageDelivery: DeliverySlice[] = [
+  { name: 'Delivered', value: 0, color: '#22c55e' },
+  { name: 'Sent', value: 11, color: '#3b82f6' },
+  { name: 'Pending', value: 15, color: '#f59e0b' },
+  { name: 'Failed', value: 0, color: '#ef4444' },
+]
+
+export type Activity = { id: string; user: string; action: string; at: string }
+
+export const recentActivity: Activity[] = [
+  { id: 'a1', user: 'Garv Kataria', action: 'logged in', at: '24 Sept 2026, 03:49 am' },
+  { id: 'a2', user: 'Garv Kataria', action: 'logged in', at: '24 Sept 2026, 03:01 am' },
+  { id: 'a3', user: 'Garv Kataria', action: 'logged in', at: '24 Sept 2026, 01:34 am' },
+  { id: 'a4', user: 'Garv Kataria', action: 'logged in', at: '24 Sept 2026, 01:33 am' },
+  { id: 'a5', user: 'Garv Kataria', action: 'logged in', at: '24 Sept 2026, 01:10 am' },
+  { id: 'a6', user: 'Garv Kataria', action: 'logged in', at: '24 Sept 2026, 12:38 am' },
+]
 
 /** Role-specific dashboard subtitle */
 export const welcomeMessages: Record<Role, string> = {

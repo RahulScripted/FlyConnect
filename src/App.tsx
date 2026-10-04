@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
 import Header from './shared/header/Header'
 import { SidebarProvider, useSidebar } from './shared/SidebarContext'
@@ -16,6 +17,21 @@ import Settings from './pages/settings'
 import Login from './pages/auth/login'
 import Signup from './pages/auth/signup'
 import ForgotPassword from './pages/auth/forgot'
+
+/** Scrolls the window to the top on every route change (and on reload). */
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    // Let the browser handle scroll ourselves, not restore the previous spot
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [pathname])
+
+  return null
+}
 
 function Layout() {
   const { expanded } = useSidebar()
@@ -53,6 +69,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <SidebarProvider>
+        <ScrollToTop />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
