@@ -1,8 +1,19 @@
-import { user, welcomeMessages, getGreeting } from '../../../mock/dashboard'
+import { Sunrise, Sun, Sunset, Moon } from 'lucide-react'
+import { welcomeMessages, getGreeting, type TimeOfDay } from '../../../mock/dashboard'
+import { useAuth } from '../../../shared/AuthContext'
 import banner from '../../../assets/banner.png'
 
+const GREETING_ICON: Record<TimeOfDay, typeof Sun> = {
+  morning: Sunrise,
+  afternoon: Sun,
+  evening: Sunset,
+  night: Moon,
+}
+
 export default function WelcomeBanner() {
-  const greeting = getGreeting()
+  const { user } = useAuth()
+  const { text: greeting, period } = getGreeting()
+  const GreetingIcon = GREETING_ICON[period]
   const message = welcomeMessages[user.role]
 
   return (
@@ -19,7 +30,8 @@ export default function WelcomeBanner() {
 
       <div className="relative flex h-full min-h-[220px] flex-col justify-center px-6 py-6 text-white sm:min-h-0 sm:py-0 sm:px-9">
         <h1 className="flex items-center gap-2 text-2xl font-bold drop-shadow sm:text-3xl">
-          {greeting}, {user.name} 
+          <GreetingIcon size={26} className="shrink-0 text-amber-200" />
+          {greeting}, {user.name}
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-blue-50/95 drop-shadow-sm">
           {message}

@@ -2,11 +2,12 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, BookOpen, MapPin, Users,
   MessageCircle, Settings2, FileText, BarChart2, Receipt,
-  Wallet, DollarSign, Settings, LogOut, ChevronRight, X,
+  Wallet, DollarSign, Settings, LogOut, ChevronRight, X, ShieldCheck,
 } from 'lucide-react'
-import { useSidebar } from '../shared/SidebarContext'
+import { useSidebar } from '../../shared/SidebarContext'
+import { useAuth } from '../../shared/AuthContext'
 
-const nav = [
+const baseNav = [
   { label: 'Dashboard', icon: LayoutDashboard, to: '/dashboard' },
   { label: 'Bookings', icon: BookOpen, to: '/bookings' },
   { label: 'Upcoming Journeys', icon: MapPin, to: '/journeys' },
@@ -21,9 +22,29 @@ const nav = [
   { label: 'Settings', icon: Settings, to: '/settings' },
 ]
 
+// Admin-only entry, inserted after Reports
+const adminNavItem = { label: 'Admin', icon: ShieldCheck, to: '/admin' }
+
 export default function Sidebar() {
   const { expanded, setExpanded, mobileOpen, setMobileOpen } = useSidebar()
+  const { isAdmin, user } = useAuth()
   const navigate = useNavigate()
+
+  const initials = user.name
+    .split(/\s+/)
+    .map((p) => p[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase()
+  const roleLabel = isAdmin ? 'Admin' : 'Member'
+
+  const nav = isAdmin
+    ? [
+        ...baseNav.slice(0, 8),
+        adminNavItem,
+        ...baseNav.slice(8),
+      ]
+    : baseNav
 
   // On mobile the sidebar always shows labels (acts as a drawer)
   const showLabels = expanded || mobileOpen
@@ -118,13 +139,13 @@ export default function Sidebar() {
         <div className="border-t border-gray-200 px-2 py-3">
           <div className={`flex h-12 items-center gap-3 rounded-lg px-2 ${!showLabels ? 'justify-center' : ''}`}>
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">
-              SK
+              {initials}
             </div>
             {showLabels && (
               <>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-semibold text-gray-800">Garv Kataria</p>
-                  <p className="truncate text-xs text-gray-400">Admin</p>
+                  <p className="truncate text-sm font-semibold text-gray-800">{user.name}</p>
+                  {isAdmin && <p className="truncate text-xs text-gray-400">{roleLabel}</p>}
                 </div>
                 <button
                   onClick={() => navigate('/login')}

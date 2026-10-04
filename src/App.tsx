@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import Sidebar from './components/Sidebar'
+import Sidebar from './components/sidebar/Sidebar'
 import Header from './shared/header/Header'
 import { SidebarProvider, useSidebar } from './shared/SidebarContext'
+import { AuthProvider, useAuth } from './shared/AuthContext'
 import Dashboard from './pages/dashboard'
+import Admin from './pages/admin'
 import Bookings from './pages/bookings'
 import Customer from './pages/customer'
 import Journeys from './pages/journeys'
@@ -35,6 +37,7 @@ function ScrollToTop() {
 
 function Layout() {
   const { expanded } = useSidebar()
+  const { isAdmin } = useAuth()
   return (
     <div className="flex min-h-screen bg-white">
       <Sidebar />
@@ -54,6 +57,11 @@ function Layout() {
             <Route path="/automations" element={<Automations />} />
             <Route path="/templates" element={<Templates />} />
             <Route path="/reports" element={<Reports />} />
+            {/* Admin-only: member performance reports & management */}
+            <Route
+              path="/admin/*"
+              element={isAdmin ? <Admin /> : <Navigate to="/dashboard" replace />}
+            />
             <Route path="/invoice" element={<Invoice />} />
             <Route path="/expense" element={<Expense />} />
             <Route path="/income" element={<Income />} />
@@ -68,15 +76,17 @@ function Layout() {
 export default function App() {
   return (
     <BrowserRouter>
-      <SidebarProvider>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/forgot" element={<ForgotPassword />} />
-          <Route path="/*" element={<Layout />} />
-        </Routes>
-      </SidebarProvider>
+      <AuthProvider>
+        <SidebarProvider>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/forgot" element={<ForgotPassword />} />
+            <Route path="/*" element={<Layout />} />
+          </Routes>
+        </SidebarProvider>
+      </AuthProvider>
     </BrowserRouter>
   )
 }

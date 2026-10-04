@@ -14,14 +14,14 @@ import {
   myBookingsByRange,
   bookingRangeLabels,
   memberBookingsByRange,
-  user,
   type BookingRange,
 } from '../../../mock/dashboard'
+import { useAuth } from '../../../shared/AuthContext'
 
 const RANGES: BookingRange[] = ['7d', '30d', 'year']
 
 export default function BookingsOverview() {
-  const isAdmin = user.role === 'admin'
+  const { isAdmin } = useAuth()
   const [range, setRange] = useState<BookingRange>('7d')
   const [open, setOpen] = useState(false)
 

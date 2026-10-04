@@ -1,24 +1,15 @@
 import {
   Plane, CalendarCheck, Users2, MessageSquare, Clock, AlertTriangle,
 } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import type {
+  StatCard, ChannelPoint, RouteSlice, Journey, Reminder, Role,
+  BookingPoint, BookingRange, MemberBookings, DeliverySlice, Activity,
+} from '../types/dashboard'
 
-export type StatCard = {
-  id: string
-  label: string
-  value: string
-  sub: string
-  icon: LucideIcon
-  tint: string
-  iconBg: string
-  iconColor: string
-  /** Positive = up, negative = down, 0 = neutral/all clear */
-  trend: number
-  /** Shown instead of a % when there is nothing to report */
-  allClear?: boolean
-  /** Route to navigate to when the card button is clicked */
-  to: string
-}
+export type {
+  StatCard, ChannelPoint, RouteSlice, Journey, Reminder, Role,
+  BookingPoint, BookingRange, MemberBookings, DeliverySlice, Activity,
+} from '../types/dashboard'
 
 export const statCards: StatCard[] = [
   {
@@ -96,8 +87,6 @@ export const statCards: StatCard[] = [
   },
 ]
 
-export type ChannelPoint = { day: string; sent: number; delivered: number; failed: number }
-
 export const messageActivity: ChannelPoint[] = [
   { day: 'Mon', sent: 12, delivered: 11, failed: 1 },
   { day: 'Tue', sent: 18, delivered: 17, failed: 1 },
@@ -108,31 +97,11 @@ export const messageActivity: ChannelPoint[] = [
   { day: 'Sun', sent: 20, delivered: 19, failed: 1 },
 ]
 
-export type RouteSlice = { name: string; value: number; count: number; color: string }
-
 export const routeSplit: RouteSlice[] = [
   { name: 'Domestic', value: 58, count: 64, color: '#2563eb' },
   { name: 'International', value: 27, count: 30, color: '#7c3aed' },
   { name: 'Connecting', value: 15, count: 16, color: '#06b6d4' },
 ]
-
-export type Journey = {
-  id: string
-  customer: string
-  pnr: string
-  flight: string
-  route: string
-  departure: string
-  status: 'Today' | 'Upcoming' | 'Completed'
-  whatsapp: 'Scheduled' | 'Sent' | 'Pending'
-  depCode: string
-  depCity: string
-  depTime: string
-  arrCode: string
-  arrCity: string
-  arrTime: string
-  duration: string
-}
 
 export const journeys: Journey[] = [
   { id: 'j1', customer: 'Amit Patel', pnr: 'LMN456', flight: 'EK-501', route: 'BOM → DXB', departure: '02:15 PM', status: 'Today', whatsapp: 'Scheduled', depCode: 'BOM', depCity: 'Mumbai', depTime: '02:15 PM', arrCode: 'DXB', arrCity: 'Dubai', arrTime: '04:05 PM', duration: '3h 20m' },
@@ -149,27 +118,6 @@ export const journeys: Journey[] = [
   { id: 'j12', customer: 'Suresh Kumar', pnr: 'EDC258', flight: 'AI-101', route: 'DEL → GOI', departure: '05:15 PM', status: 'Upcoming', whatsapp: 'Scheduled', depCode: 'DEL', depCity: 'Delhi', depTime: '05:15 PM', arrCode: 'GOI', arrCity: 'Goa', arrTime: '07:40 PM', duration: '2h 25m' },
 ]
 
-export type Reminder = {
-  id: string
-  date: string
-  time: string
-  name: string
-  note: string
-  pnr: string
-  flightCode: string
-  depCode: string
-  depCity: string
-  depTime: string
-  arrCode: string
-  arrCity: string
-  arrTime: string
-  duration: string
-  /** E.164 phone number used to open WhatsApp */
-  phone: string
-  /** Pre-filled WhatsApp message */
-  message: string
-}
-
 export const reminders: Reminder[] = [
   { id: 'r1', date: 'Today', time: '06:00 am', name: 'Amit Patel', note: 'Journey Day Reminder', pnr: 'LMN456', flightCode: 'EK-501', depCode: 'BOM', depCity: 'Mumbai', depTime: '02:15 PM', arrCode: 'DXB', arrCity: 'Dubai', arrTime: '04:05 PM', duration: '3h 20m', phone: '919123456789', message: 'Hi Amit, your flight EK-501 (BOM → DXB) departs today at 02:15 PM. Safe travels!' },
   { id: 'r2', date: 'Today', time: '06:00 am', name: 'Sneha Iyer', note: 'Journey Day Reminder', pnr: 'QWE321', flightCode: 'UK-955', depCode: 'DEL', depCity: 'Delhi', depTime: '04:40 PM', arrCode: 'BOM', arrCity: 'Mumbai', arrTime: '06:50 PM', duration: '2h 10m', phone: '918877665544', message: 'Hi Sneha, your flight UK-955 (DEL → BOM) departs today at 04:40 PM. Safe travels!' },
@@ -179,16 +127,10 @@ export const reminders: Reminder[] = [
   { id: 'r6', date: '25 Sept', time: '08:00 am', name: 'Vikram Rao', note: '24h Reminder', pnr: 'OKN963', flightCode: 'UK-833', depCode: 'HYD', depCity: 'Hyderabad', depTime: '11:50 AM', arrCode: 'BOM', arrCity: 'Mumbai', arrTime: '01:15 PM', duration: '1h 25m', phone: '918080808080', message: 'Hi Vikram, a reminder for your flight UK-833 (HYD → BOM). Safe travels!' },
 ]
 
-export type Role = 'admin' | 'member'
-
 export const user = {
   name: 'Garv',
   role: 'admin' as Role,
 }
-
-export type BookingPoint = { day: string; count: number }
-
-export type BookingRange = '7d' | '30d' | 'year'
 
 export const bookingRangeLabels: Record<BookingRange, string> = {
   '7d': 'Last 7 Days',
@@ -272,9 +214,6 @@ export const myBookingsByRange: Record<BookingRange, BookingPoint[]> = {
   ],
 }
 
-/** Per-member booking counts (admin-only breakdown), keyed by range */
-export type MemberBookings = { name: string; count: number; color: string }
-
 export const memberBookingsByRange: Record<BookingRange, MemberBookings[]> = {
   '7d': [
     { name: 'Rahul Sharma', count: 14, color: '#2563eb' },
@@ -296,16 +235,12 @@ export const memberBookingsByRange: Record<BookingRange, MemberBookings[]> = {
   ],
 }
 
-export type DeliverySlice = { name: string; value: number; color: string }
-
 export const messageDelivery: DeliverySlice[] = [
   { name: 'Delivered', value: 0, color: '#22c55e' },
   { name: 'Sent', value: 11, color: '#3b82f6' },
   { name: 'Pending', value: 15, color: '#f59e0b' },
   { name: 'Failed', value: 0, color: '#ef4444' },
 ]
-
-export type Activity = { id: string; user: string; action: string; at: string }
 
 export const recentActivity: Activity[] = [
   { id: 'a1', user: 'Garv Kataria', action: 'logged in', at: '24 Sept 2026, 03:49 am' },
@@ -324,11 +259,13 @@ export const welcomeMessages: Record<Role, string> = {
     "Here's what's happening with your travel automation today. Your BOM → BLR trip is on Monday and auto check-in is on. 2 things need you: upload your receipts and follow up on your hotel request.",
 }
 
-/** Greeting based on the current UTC hour */
-export function getGreeting(date = new Date()): string {
-  const h = date.getUTCHours()
-  if (h >= 5 && h < 12) return 'Good morning'
-  if (h >= 12 && h < 17) return 'Good afternoon'
-  if (h >= 17 && h < 22) return 'Good evening'
-  return 'Late night'
+export type TimeOfDay = 'morning' | 'afternoon' | 'evening' | 'night'
+
+/** Greeting text + time-of-day bucket based on the local hour. */
+export function getGreeting(date = new Date()): { text: string; period: TimeOfDay } {
+  const h = date.getHours()
+  if (h >= 5 && h < 12) return { text: 'Good morning', period: 'morning' }
+  if (h >= 12 && h < 17) return { text: 'Good afternoon', period: 'afternoon' }
+  if (h >= 17 && h < 21) return { text: 'Good evening', period: 'evening' }
+  return { text: 'Late night', period: 'night' }
 }
